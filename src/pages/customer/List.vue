@@ -99,11 +99,16 @@ export default {
       }).then(() => {
         //调用后台接口，完成删除操作
         let url = "http://localhost:6677/customer/deleteById?id="+id;
-        request.get(url);
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        request.get(url).then((response)=>{
+          //刷新数据
+          this.loadData();
+          //提示结果
+            this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
         });
+        
       })
       
     },
