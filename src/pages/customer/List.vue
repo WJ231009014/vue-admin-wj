@@ -1,10 +1,9 @@
 <template>
   <div>
-
     <!-- 按钮 -->
     <el-button type="success" size="small" @click="toAddHandler">添加</el-button> 
     <el-button type="danger" size="small">批量删除</el-button>
-
+    <!-- /按钮 -->
     <!-- 表格 -->
     <el-table :data="customers">
       <el-table-column prop="id" label="编号"></el-table-column>
@@ -13,20 +12,19 @@
       <el-table-column label="操作">
         <template v-slot="slot">
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
-          <a href="" @click.prevent="toUpdateHandler">修改</a>
+          <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
         </template>
       </el-table-column>
     </el-table>
-
+    <!-- /表格结束 -->
     <!-- 分页开始 -->
     <!-- <el-pagination layout="prev, pager, next" :total="50"></el-pagination> -->
-
+    <!-- /分页结束 -->
     <!-- 模态框 -->
     <el-dialog
       title="录入顾客信息"
       :visible.sync="visible"
       width="60%">
-        ---{{form}}
       <el-form :model="form" label-width="80px">
         <el-form-item label="用户名">
           <el-input v-model="form.username"></el-input>
@@ -47,6 +45,7 @@
         <el-button size="small" type="primary" @click="submitHandler">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- /模态框 -->
 
   </div>
 </template>
@@ -97,23 +96,24 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        //调用后台接口，完成删除操作
+        // 调用后台接口，完成删除操作
         let url = "http://localhost:6677/customer/deleteById?id="+id;
         request.get(url).then((response)=>{
-          //刷新数据
+          //1. 刷新数据
           this.loadData();
-          //提示结果
-            this.$message({
+          //2. 提示结果
+          this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: response.message
           });
-        });
+        })
+        
         
       })
       
     },
     toUpdateHandler(row){
-      //模态框的表单中显示当前行的信息
+      // 模态框表单中显示出当前行的信息
       this.form = row;
       this.visible = true;
     },
@@ -121,6 +121,10 @@ export default {
       this.visible = false;
     },
     toAddHandler(){
+      // 将form变为初始值
+      this.form = {
+        type:"customer"
+      }
       this.visible = true;
     }
   },
@@ -137,7 +141,7 @@ export default {
   created(){
     // this为当前vue实例对象
     // vue实例创建完毕 
-    this.loadData()
+    this.loadData();
 
   }
 }

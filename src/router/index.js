@@ -54,8 +54,6 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
-
   {
     path: '/customer',
     component: Layout,
@@ -63,29 +61,22 @@ export const constantRoutes = [
       {
         path: 'list',
         name: 'CustomerList',
-        //@代表src
         component: () => import('@/pages/customer/List'),
         meta: { title: '顾客管理', icon: 'user' }
       }
     ]
-  },
-
-  
-  {
+  },{
     path: '/employee',
     component: Layout,
     children: [
       {
         path: 'list',
         name: 'EmployeeList',
-        //@代表src
         component: () => import('@/pages/employee/List'),
-        meta: { title: '员工管理', icon: 'user' }
+        meta: { title: '员工管理', icon: 'tree' }
       }
     ]
   },
-  
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

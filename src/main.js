@@ -23,10 +23,11 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
+// let mockXHR = require("../mock")
 import { mockXHR } from '../mock'
-//if (process.env.NODE_ENV === 'production') {
-//  mockXHR()
-//}
+// if (process.env.NODE_ENV === 'production') {
+//   mockXHR()
+// }
 mockXHR()
 
 // set ElementUI lang to EN
